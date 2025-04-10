@@ -36,9 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         observeRecipes()
 
-        setupBottomViewNavegation()
-
-
+        setBottomViewNavegation()
 
     }
 
@@ -94,26 +92,32 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupBottomViewNavegation(){
 
+    private fun setBottomViewNavegation(){
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
+        bottomNavigationView.selectedItemId = R.id.nav_home
 
-        bottomNavigationView.setOnItemSelectedListener { menuItem ->
-            when (menuItem.itemId) {
+        bottomNavigationView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_home -> true
+
+                R.id.nav_search -> {
+                    startActivity(Intent(this, SearchActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    finish()
+                    true
+                }
+
                 R.id.nav_fav -> {
-                    val intent = Intent(this, ShoppingActivity::class.java)
-                    startActivity(intent)
+                    startActivity(Intent(this, ShoppingActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    finish()
                     true
                 }
-                  R.id.nav_home -> {
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                    true
-                }
+
                 else -> false
             }
         }
-
     }
 
 }
